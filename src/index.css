@@ -133,6 +133,10 @@ nav .logo_container .logo{
 
 
 /* ------ Onboarding page -------- */
+.onboarding {
+    border-top: solid 1px rgb(203, 203, 203);
+}
+
 .onboarding form {
     display: flex;
     justify-content: center;
@@ -194,6 +198,7 @@ nav .logo_container .logo{
     background: linear-gradient(rgba(253, 41, 123) 0%, rgba(255, 101, 91) 100%);
     color: white
 }
+
 .onboarding form input[type="submit"]:active {
     background: linear-gradient(rgb(188, 31, 91) 0%, rgb(197, 79, 71) 100%);
     color: white;
@@ -201,4 +206,8 @@ nav .logo_container .logo{
 
 .onboarding form input[type="number"] {
     width: 10%;
+}
+
+.onboarding form .photo-container img {
+    width: 100%;
 }

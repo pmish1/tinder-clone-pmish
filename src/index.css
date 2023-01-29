@@ -3,6 +3,7 @@
 html, body {
     margin: 0;
     padding: 0;
+    text-align: center;
 }
 
 * {
@@ -13,6 +14,10 @@ h2 {
     font-style: italic;
 }
 
+.primary_title {
+    font-size: 90px;
+    color: white;
+}
 .primary_button {
     color: #fff;
     text-transform: uppercase;
@@ -20,7 +25,7 @@ h2 {
     background: linear-gradient(45deg, #fe3072, #ff5940);
     padding: 12px 30px;
     border-radius: 30px;
-    border: none;
+    border: 2px white solid;
 }
 .primary_button:hover {
     background: linear-gradient(260deg, #fe3072, #ff5940);
@@ -43,10 +48,6 @@ h2 {
 
 }
 
-body {
-    text-align: center;
-    margin: 0;
-}
 
 /* ------ Navbar -------- */
 nav {
@@ -56,8 +57,8 @@ nav {
 }
 
 nav .nav_button {
-    color: #fe3072;
-    background-color: white;
+    color: white;
+    background-color: rgb(253, 41, 123);
     font-size: 20px;
     padding: 10px 20px;
     border-radius: 10px;
@@ -66,7 +67,7 @@ nav .nav_button {
 }
 
 nav .nav_button:disabled {
-    background-color: grey;
+    color: grey;
     color:  #8d183d;
 }
 
@@ -88,15 +89,21 @@ nav .logo_container .logo{
     position: fixed;
     background: linear-gradient(
         to bottom, 
-        rgba(0, 0, 0, 0.65) 0%,
-        rgba(0, 0, 0, 1) 100%
+        rgba(253, 41, 123) 0%,
+        rgba(255, 101, 91) 100%
     )
+}
+
+.home {
+    margin-top: 30vh;
 }
 
 /* ------ Auth Modal -------- */
 .auth_modal {
     position: absolute;
-    top: 175px;
+    left: 0;
+    right: 0;
+    top: 50px;
     margin-left: auto;
     margin-right: auto;
     width: 360px;
@@ -121,4 +128,77 @@ nav .logo_container .logo{
     padding: 8px;
     margin: 8px;
     font-size: 17px;
+}
+
+
+
+/* ------ Onboarding page -------- */
+.onboarding form {
+    display: flex;
+    justify-content: center;
+}
+
+.onboarding form section {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    width: 35%;
+    text-align: start;
+}
+
+.onboarding form input {
+    padding: 15px 30px;
+    margin: 10px 0;
+    font-size: 15px;
+    border: solid 2px rgb(180, 180, 180);
+    border-radius: 10px;
+}
+
+.onboarding form input::-webkit-outer-spin-button,
+.onboarding form input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+
+}
+
+.onboarding form label {
+    margin: 10px 0;
+}
+
+.onboarding form .multiple_input_container {
+    display: flex;
+    flex-direction: row;
+}
+
+.onboarding form .multiple_input_container input {
+    margin-right: 10px;
+}
+
+.onboarding form .multiple_input_container label {
+    padding: 10px;
+    border: solid 2px rgb(180, 180, 180);
+    border-radius: 10px;
+    transition: all 0.3s;
+    margin-right: 10px; 
+}
+
+.onboarding form input[type="radio"] {
+    display: none;
+}
+
+.onboarding form input[type="radio"]:checked + label {
+    border: solid 2px rgb(253, 41, 123);
+}
+
+.onboarding form input[type="submit"]:hover {
+    background: linear-gradient(rgba(253, 41, 123) 0%, rgba(255, 101, 91) 100%);
+    color: white
+}
+.onboarding form input[type="submit"]:active {
+    background: linear-gradient(rgb(188, 31, 91) 0%, rgb(197, 79, 71) 100%);
+    color: white;
+}
+
+.onboarding form input[type="number"] {
+    width: 10%;
 }

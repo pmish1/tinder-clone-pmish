@@ -77,8 +77,9 @@ app.post('/login', async (req, res) => {
                 expiresIn: 60 * 24,  //expires in 24 hours
             })
             res.status(201).json({token, userId: user.user_id})
+        } else {
+            res.status(400).send('invalid credentials')
         }
-        res.status(400).send('invalid credentials')
     } catch (error) {
         console.log(error)
     }
@@ -118,28 +119,147 @@ app.put('/user', async (req, res) => {
 })
 
 
-
-
-
-
-
-
-
-
-app.get('/users', async (req, res) => {
+//----------------------------------- DASHBOARD -----------------------------------
+app.get('/user', async (req, res) => {
     const client = new MongoClient(uri)
+    const userId = req.query.userId
 
     try {
         await client.connect()
         const database = client.db('app-data')
         const users = database.collection('users')
 
-        const returnedUsers = await users.find().toArray()
-        res.send(returnedUsers)
+        const query = {user_id: userId}
+        const user = await users.findOne(query)
+        res.send(user)
+
+
+    } finally {
+        await client.close()  
+    }
+
+}) 
+
+//ONLY DISPLAY THE GENDER THAT USER WANTS 
+app.get('/gendered-users', async (req, res) => {
+    const client = new MongoClient(uri)
+    const gender = req.query.gender
+
+
+    try {
+        await client.connect()
+        const database = client.db('app-data')
+        const users = database.collection('users')
+        const query = { gender_identity: {$eq: gender} }
+        const foundUsers = await users.find(query).toArray()  //return users with genders are interested in
+
+        res.send(foundUsers)
     } finally {
         await client.close()  //ensures client will close when finished or error occurs
     }
 })
+
+//ADD MATCHES TO USER DATABASE
+app.put('/addmatch', async (req, res) => {
+    const client = new MongoClient(uri)
+    const {userId, matchedUserId} = req.body
+
+
+    try {
+        await client.connect()
+        const database = client.db('app-data')
+        const users = database.collection('users')
+
+
+        const query = {user_id: userId}
+        const firstUpdateDocument = {
+            $push: {matches: {user_id: matchedUserId}}
+        }
+        const firstMatchesUpload = await users.updateOne(query, firstUpdateDocument)
+
+        const userMatches = await users.findOne({user_id: userId})
+
+
+        //remove duplicates 
+        const jsonObj = userMatches.matches.map(JSON.stringify)
+        const uniqueSet = new Set(jsonObj)
+        const uniqueArray = Array.from(uniqueSet).map(JSON.parse)
+
+
+        const user = await users.updateOne(query, {$set: {matches: uniqueArray}})
+
+
+        res.send(user)
+    } finally {
+        await client.close()
+    }
+})
+
+//SHOW MATCHED USERS IN MATCHES DISPLAY
+app.get('/users', async (req, res) => {
+    const client = new MongoClient(uri)
+    const userIds = JSON.parse(req.query.userIds)
+
+
+    try {
+        await client.connect()
+        const database = client.db('app-data')
+        const users = database.collection('users')
+
+        const pipeline = [
+            {
+                '$match': {
+                    'user_id': {
+                        '$in': userIds
+                    }
+                }
+            }
+        ]
+        const foundUsers = await users.aggregate(pipeline).toArray()
+        console.log(foundUsers)
+        res.send(foundUsers)
+
+    } finally {
+        await client.close()
+    }
+})
+
+
+//----------------------------------- CHAT -----------------------------------
+app.get('/messages', async (req, res) => {
+    const client = new MongoClient(uri)
+    const {userId, correspondingUserId} = req.query
+    console.log(userId, correspondingUserId)
+    try {
+        await client.connect()
+        const database = client.db('app-data')
+        const messages = database.collection('messages')
+    
+        const query = {
+            from_userId: userId, to_userId: correspondingUserId
+        }
+        const foundMessages = await messages.find(query).toArray()
+        res.send(foundMessages)
+    } finally {
+        await client.close() 
+    }
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 app.listen(PORT, () => {console.log('listening on port, ' + PORT)})
 

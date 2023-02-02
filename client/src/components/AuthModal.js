@@ -12,7 +12,7 @@ const AuthModal = ({setShowModal, isSignUp}) => {
 
     let navigate = useNavigate()
 
-    console.log(email, password, confirmPassword)
+    isSignUp ? console.log(email, password, confirmPassword) : console.log(email, password)
 
 
     const handleClick = () => {
@@ -39,6 +39,8 @@ const AuthModal = ({setShowModal, isSignUp}) => {
             if (success && isSignUp) navigate ('/onboarding') //if post request successful and sigin up, navigate to onboarding page
             if (success && !isSignUp) navigate ('/dashboard') //if post request successful and loggin in, navigate to dashboard page
         
+            window.location.reload() //make sure auth token is read by /onboarding and /dashboard
+
         } catch (error) {
             console.log(error)
         }

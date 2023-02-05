@@ -3,6 +3,7 @@ import {useState, useEffect} from 'react'
 import axios from 'axios'
 import {useCookies} from 'react-cookie'
 
+
 import ChatContainer from '../components/ChatContainer'
 
 const Dashboard = () => {
@@ -13,6 +14,8 @@ const Dashboard = () => {
   const [lastDirection, setLastDirection] = useState()
 
   const userId = cookies.UserId
+
+
 
   const getUser = async () => {
     try {
@@ -39,8 +42,13 @@ const Dashboard = () => {
 
   useEffect(() => {
     getUser()
-    getGenderedUsers()
-  }, [user, genderedUsers])
+  }, [])
+
+  useEffect(() => {
+    if (user) {
+        getGenderedUsers()
+    }
+  }, [user])
 
 
 

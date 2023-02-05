@@ -13,9 +13,7 @@ app.use(cors())
 app.use(express.json())
 const PORT = 8000
 
-app.get('/', (req, res) => {
-    res.json('hello there')
-})
+
 
 //----------------------------------- SIGNUP -----------------------------------
 app.post('/signup', async (req, res) => {
@@ -263,8 +261,12 @@ app.post('/message', async (req, res) => {
     }
 })
 
+app.use(express.static(__dirname + '/client/build'))
 
 
 app.listen(PORT, () => {console.log('listening on port, ' + PORT)})
 
 
+app.get('*', (req, res) => {
+  res.sendFile(__dirname + '/client/build/index.html')
+})

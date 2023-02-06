@@ -7,7 +7,7 @@ const bcrypt = require('bcrypt')
 require('dotenv').config()
 
 
-const dbURL = process.env.MONGODB_URL
+const uri = process.env.MONGODB_URL
 const app = express()
 app.use(cors())
 app.use(express.json())
@@ -17,7 +17,7 @@ app.use(express.json())
 
 //----------------------------------- SIGNUP -----------------------------------
 app.post('/signup', async (req, res) => {
-    const client = new MongoClient(dbURL)
+    const client = new MongoClient(uri)
     const {email, password} = req.body
 
     const generateduserId = uuidv4()

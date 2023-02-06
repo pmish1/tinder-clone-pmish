@@ -264,7 +264,7 @@ app.post('/message', async (req, res) => {
 app.use(express.static(__dirname + '/client/build'))
 
 
-app.listen(PORT, () => {console.log('listening on port, ' + PORT)})
+app.listen(process.env.PORT || PORT, () => {console.log('listening on port, ' + PORT)})
 
 
 app.get('*', (req, res) => {

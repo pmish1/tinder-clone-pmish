@@ -11,7 +11,7 @@ const uri = process.env.MONGODB_URL
 const app = express()
 app.use(cors())
 app.use(express.json())
-const PORT = process.env.PORT || 8000
+// const PORT = process.env.PORT || 8000
 
 
 
@@ -261,11 +261,11 @@ app.post('/message', async (req, res) => {
     }
 })
 
+
+
+app.listen(process.env.PORT || 8000)
+
 app.use(express.static(__dirname + '/client/build'))
-
-
-app.listen(process.env.PORT || PORT, () => {console.log('listening on port, ' + PORT)})
-
 
 app.get('*', (req, res) => {
   res.sendFile(__dirname + '/client/build/index.html')

@@ -63,7 +63,7 @@ app.post('/login', async (req, res) => {
     console.log('backend hit')
     const client = new MongoClient(uri)
     const {email, password} = req.body
-
+    email ? console.log('recieved req.body') : console.log('did not receive req.body')
 
     try {
         await client.connect()

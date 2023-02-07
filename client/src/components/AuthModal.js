@@ -29,7 +29,6 @@ const AuthModal = ({setShowModal, isSignUp}) => {
 
             // posts the email and password to the signup in backend or to login depending
             console.log('before axios post')
-            console.log('isSignUp', isSignUp)
             const response = await axios.post(`https://tinderclonepmish.herokuapp.com/${isSignUp ? 'signup': 'login'}`, {email, password})
             console.log('after axios.post')
             

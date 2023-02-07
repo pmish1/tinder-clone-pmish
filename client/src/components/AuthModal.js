@@ -28,7 +28,10 @@ const AuthModal = ({setShowModal, isSignUp}) => {
             }
 
             // posts the email and password to the signup in backend or to login depending
-            const response = await axios.post(`/${isSignUp ? 'signup': 'login'}`, {email, password})
+            console.log('before axios post')
+            console.log('isSignUp', isSignUp)
+            const response = await axios.post(`https://tinderclonepmish.herokuapp.com/${isSignUp ? 'signup': 'login'}`, {email, password})
+            console.log('after axios.post')
             
             console.log('response', response)
             //these are the parameters returned from the jsonwebtoken response status code

@@ -28,7 +28,7 @@ const AuthModal = ({setShowModal, isSignUp}) => {
             }
 
             // posts the email and password to the signup in backend or to login depending
-            const response = await axios.post(`http://localhost:8000/${isSignUp ? 'signup': 'login'}`, {email, password})
+            const response = await axios.post(`/${isSignUp ? 'signup': 'login'}`, {email, password})
             
             console.log('response', response)
             //these are the parameters returned from the jsonwebtoken response status code
